@@ -49,6 +49,8 @@
   </style>
 </head>
 
+              
+
 <body>
   <main>
     <form>
@@ -62,30 +64,166 @@
           <option>/</option>
         </select>
         <input name="second-num" id="second-num" />
-        <button id="calculate">Calculate</button>
+        <button id="calculate" class="calculate">Calculate</button>
         <br />
         <output></output>
       </fieldset>
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="logButton">Console Log</button>
+      <button id="errorButton">Console Error</button>
+      <button id="countButton">Console Count</button>
+      <button id="warnButton">Console Warn</button>
+      <button id="assertButton">Console Assert</button>
+      <button id="clearButton">Console Clear</button>
+      <button id="dirButton">Console Dir</button>
+      <button id="dirXmlButton">Console dirxml</button>
+      <button id="groupStartButton">Console Group Start</button>
+      <button id="groupEndButton">Console Group End</button>
+      <button id="tableButton">Console Table</button>
+      <button id="startTimerButton">Start Timer</button>
+      <button id="endTimerButton">End Timer</button>
+      <button id="consoleTraceButton">Console Trace</button>
+      <button id="globalErrorButton">Trigger a Global Error</button>
+      <button id="sampleErrorButton">Sample Error</button>
+      <button id="trackJsButton">trackJs</button>
+
     </section>
   </main>
+
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "cfb8af7fa43a4f90bcde086a1dbb71cb"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+<script>
+  
+  const logButton = document.getElementById('logButton');
+  logButton.addEventListener('click', () => {
+    console.log('console log');
+  });
+
+  const errorButton = document.getElementById('errorButton');
+  errorButton.addEventListener('click', () => {
+    console.error('error');
+  });
+
+  const countButton = document.getElementById('countButton');
+  countButton.addEventListener('click', () => {
+    const countLabel = 'count';
+    console.count(countLabel);
+  });
+
+  const warnButton = document.getElementById('warnButton');
+  warnButton.addEventListener('click', () => {
+    console.warn('warning');
+  });
+
+  const assertButton = document.getElementById('assertButton');
+  assertButton.addEventListener('click', () => {
+    const condition = false;
+    console.assert(condition, 'assertion false');
+  });
+
+  const clearButton = document.getElementById('clearButton');
+  clearButton.addEventListener('click', () => {
+    console.clear();
+  });
+
+  const dirButton = document.getElementById('dirButton');
+  dirButton.addEventListener('click', () => {
+    const obj = { title: "hello", cool: "hi"};
+    console.dir(obj);
+  });
+
+  const dirXmlButton = document.getElementById('dirXmlButton');
+  dirXmlButton.addEventListener('click', () => {
+    console.dirxml(document.querySelector(".calculate"));
+  });
+
+  const groupStartButton = document.getElementById('groupStartButton');
+  groupStartButton.addEventListener('click', () => {
+    console.group('group');
+    console.log("hello")
+  });
+
+  const groupEndButton = document.getElementById('groupEndButton');
+  groupEndButton.addEventListener('click', () => {
+    console.log('end group');
+    console.groupEnd();
+    console.log("hello")
+  });
+
+  const tableButton = document.getElementById('tableButton');
+  tableButton.addEventListener('click', () => {
+    const data = [
+      { name: 'James', age: 20 },
+      { name: 'John', age: 21 },
+    ];
+    console.table(data);
+  });
+
+  const startTimerButton = document.getElementById('startTimerButton');
+  startTimerButton.addEventListener('click', () => {
+    console.time('Timer');
+  });
+
+  const endTimerButton = document.getElementById('endTimerButton');
+  endTimerButton.addEventListener('click', () => {
+    console.timeEnd('Timer');
+  });
+
+  const consoleTraceButton = document.getElementById('consoleTraceButton');
+  consoleTraceButton.addEventListener('click', () => {
+    console.trace();
+  });
+  function badCode()
+      {
+        alert('Good code running when suddenly...');
+        abooM('bad code!'); /* BAD CODE ON PURPOSE */ 
+      }
+      
+
+  const globalErrorButton = document.getElementById('globalErrorButton');
+  globalErrorButton.addEventListener('click', () => {
+      badCode();
+      console.log("global error")
+  });
+
+
+  class CustomError extends Error {
+  constructor(message) {
+    super(message); // (1)
+    this.name = "CustomError"; // (2)
+  }
+}
+
+function test() {
+  throw new CustomError("error!");
+}
+  const sampleErrorButton = document.getElementById('sampleErrorButton');
+  sampleErrorButton.addEventListener('click', () => {
+    try {
+    test();
+  } catch(err) {
+    alert(err.message);
+    alert(err.name); 
+    alert(err.stack); 
+  } finally{
+    console.log("function finished")
+  } 
+  });
+
+  const trackJsButton = document.getElementById('trackJsButton');
+  trackJsButton.addEventListener('click', () => {
+    TrackJS.track('Testing TrackJS!');
+  });
+  
+
+</script>
 
   <script>
     let form = document.querySelector('form');
